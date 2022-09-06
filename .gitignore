@@ -1,4 +1,4 @@
 *.pro.user
-student/
-examples/
-templates/
+/student
+/examples
+/templates
