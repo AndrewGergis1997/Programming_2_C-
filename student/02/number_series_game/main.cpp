@@ -13,13 +13,22 @@ int main()
     cin >>i;
     for ( ; i>=num;num++)
       {
-        if ( num % 3 == 0 )
+        if (num % 7 == 0 && num % 3 == 0)
+          {
+            cout << "zip boing" << endl;
+          }
+        else if (num % 7 == 0)
+          {
+            cout << "boing" << endl;
+          }
+        else if ( num % 3 == 0 )
           {
             cout << "zip" << endl;
           }
+
         else
           {
-            cout<<num<< endl;
+            cout << num<< endl;
           }
 
       }
