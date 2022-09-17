@@ -8,12 +8,20 @@ int main()
 
     // Write your code here
 
-    int num = 0 ;
+    int num = 1 ;
     int i;
     cin >>i;
     for ( ; i>=num;num++)
       {
-     cout<<num+1<< endl;
+        if ( num % 3 == 0 )
+          {
+            cout << "zip" << endl;
+          }
+        else
+          {
+            cout<<num<< endl;
+          }
+
       }
       return 0;
 }
