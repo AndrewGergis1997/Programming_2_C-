@@ -12,7 +12,7 @@ int main()
   if (n <= 1289)
     {
         cube = pow (n,3);
-        cout <<"The cube of "<< n <<" is " << cube << endl;
+        cout <<"The cube of "<< n <<" is " << cube << "." <<endl;
     }
   else
     {
