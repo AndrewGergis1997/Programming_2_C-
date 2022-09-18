@@ -21,6 +21,13 @@ int main()
     // Write your code here
     int n;
     cin >> n;
+    if (n<=0)
+      {
+        cout << "Only positive numbers accepted" << endl;
+      }
+    else
+      {
     printPFsInPairs(n);
+      }
     return 0;
 }
