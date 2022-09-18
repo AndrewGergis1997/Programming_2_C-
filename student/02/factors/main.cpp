@@ -4,8 +4,8 @@ using namespace std;
 
 void printPFsInPairs(int n)
 {
-  int j;
-    for (int i = 1; i * i <= n; i++)
+int j=1;
+    for (int i = j; i * i <= n; i++)
       {
         if (n % i == 0)
           {
