@@ -38,16 +38,26 @@ int main()
   long int drawn;
   cin >> drawn;
 
-  if (all >= 0)
-    {
-      cout << "The probability of guessing all "<< drawn <<" balls correctly is 1/"<< probability(all, drawn) << endl;
-    }
 
-  else
+ if ( all <=0 || drawn <= 0)
     {
      cout << "The number of balls must be a positive number." << endl;
     }
 
+ else  if ( drawn > all )
+   {
+     cout << "The maximum number of drawn balls is the total amount of balls." << endl;
+   }
+
+  else if ( drawn == all )
+    {
+      cout << "The probability of guessing all "<< drawn <<" balls correctly is 1/1" << endl;
+    }
+
+  else if (all > 0 && drawn > 0)
+    {
+      cout << "The probability of guessing all "<< drawn <<" balls correctly is 1/"<< probability(all, drawn) << endl;
+    }
 
   return 0;
 }
