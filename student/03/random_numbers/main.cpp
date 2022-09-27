@@ -10,6 +10,17 @@ void produce_random_numbers(unsigned int lower, unsigned int upper, int seed)
   default_random_engine gen(seed);
   uniform_int_distribution<int> distr(lower, upper);
   cout <<"Your drawn random number is " << distr(gen) << std::endl;
+  char choice;
+  cout << "Press q to quit or any other key to continue: ";
+  cin >> choice;
+  cout <<endl;
+      for (;choice != 'q';){
+      cout <<"Your drawn random number is " << distr(gen) << std::endl;
+      cout << "Press q to quit or any other key to continue: ";
+      cin >> choice ;
+      cout <<endl;
+        }
+
 
 }
 
@@ -21,10 +32,6 @@ int main()
     cin >> lower_bound;
     cout << "Enter an upper bound: ";
     cin >> upper_bound;
-    cout << "Enter a seed value: ";
-    cin >> seed;
-    cout <<"\n" <<endl;
-
 
     if(lower_bound >= upper_bound)
     {
@@ -32,17 +39,13 @@ int main()
              << endl;
         return EXIT_FAILURE;
     }
+    else {
+    cout << "Enter a seed value: ";
+    cin >> seed;
+    cout <<endl;
+
     produce_random_numbers(lower_bound, upper_bound, seed);
-    char choice;
-    cout << "Press q to quit or any other key to continue: ";
-    cin >> choice;
-    cout <<"\n" <<endl;
-        for (;choice != 'q';){
-        produce_random_numbers(lower_bound, upper_bound, seed);
-        cout << "Press q to quit or any other key to continue: ";
-        cin >> choice ;
-        cout <<"\n" <<endl;
-          }
 
     return EXIT_SUCCESS;
+      }
 }
