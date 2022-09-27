@@ -7,4 +7,4 @@ SOURCES += main.cpp \
     player.cpp
 
 HEADERS += \
-    player.h
+    player.hh

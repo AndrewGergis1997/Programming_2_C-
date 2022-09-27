@@ -1,4 +1,4 @@
-#include "player.h"
+#include "player.hh"
 
 Player::Player(std::string const &name):
   points_(0),name_(name)

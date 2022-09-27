@@ -1,5 +1,5 @@
-#ifndef PLAYER_H
-#define PLAYER_H
+#ifndef PLAYER_HH
+#define PLAYER_HH
 
 #include <string>
 
@@ -21,4 +21,4 @@ private:
   std::string name_;
 };
 
-#endif // PLAYER_H
+#endif // PLAYER_HH
