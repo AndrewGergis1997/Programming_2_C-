@@ -56,22 +56,31 @@ bool is_arithmetic_series (std::vector< int >& ints) {
 bool is_geometric_series(std::vector< int >& ints)
 
 {
+
     if (ints.size() == 1)
       {
         return true;
       }
 
     // Calculate ratio
+    if (ints.at(0) == 0)
+      {
+         return false;
+      }
+    else
+   {
     int ratio = ints[1] / (ints[0]);
 
     // Check the ratio of the remaining
     for (int i = 1; i < ((int) ints.size()); i++) {
-        if ((ints[i] / (ints[i - 1])) != ratio) {
+
+     if ((ints[i] / (ints[i - 1])) != ratio) {
             return false;
         }
     }
     return true;
 }
+   }
 
 
 int main()
