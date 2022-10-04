@@ -89,8 +89,9 @@ void print_all(/* a vector including color series */)
 // Implements the actual game loop, where user-given guesses are read
 // and compared to the secret row.
 // On each round, all rows given so far are printed.
-
-
+void game_start(AllColors user_given_series){
+    user_given_series.trials();
+}
 int main()
 {
     cout << INFO_TEXT << endl;
@@ -102,8 +103,10 @@ int main()
 
     // TODO: Play the game, i.e. repeatedly read a user given number series
     // and compare it with the secret one
-
-
+    AllColors entered_sequence;
+    if(is_valid){
+            game_start(refrence);
+    }
 
 
     return 0;

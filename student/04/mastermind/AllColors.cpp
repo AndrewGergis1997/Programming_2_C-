@@ -58,7 +58,7 @@ checking function out to get
 
 
 /* Generating Random colors to fill vector entered_colors (Works with R choice)*/
-void AllColors::random_fill_color(int & seed)
+void AllColors::random_generator(int & seed)
 {
 
         std::vector<char> color {'b', 'r', 'y', 'g', 'o', 'v'};
@@ -80,7 +80,7 @@ void AllColors::user_refrence_colors()
 }
 
 /* Checking if the given refrence color sequence is in available colors and in right size (Works with L choice)*/
-void AllColors::fill_series_manually()
+void AllColors::manual_generator()
 {
 
     bool accepted = false;

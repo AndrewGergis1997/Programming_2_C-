@@ -13,13 +13,14 @@ class AllColors
 {
 public:
     AllColors();
-    int get_current_position( );
-    int get_correct_colors( );
-    void random_fill_color(int&);
+
+    void random_generator(int&);
     void user_refrence_colors();
-    void fill_series_manually();
+    void manual_generator();
     void user_refrence_colors_trial();
     void trials();
+    int get_current_position( );
+    int get_correct_colors( );
     bool check_colors();
     bool check_length();
     bool check_colors_trial();
