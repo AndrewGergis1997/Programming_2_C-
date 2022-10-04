@@ -112,7 +112,7 @@ void AllColors::user_refrence_colors_trial()
   std::cin >> entered_colors;
   if (entered_colors == "q" || entered_colors == "Q")
       {
-      exit(EXIT_FAILURE);
+      exit(EXIT_SUCCESS);
       }
 
   }
