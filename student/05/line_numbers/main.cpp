@@ -17,7 +17,7 @@ int main()
       ofstream fileWrite(outFile);    // creating file to be writen into
 
       if ( not fileRead ) {           // check for input file errors
-          cout << "Error! The file not_a_file.input cannot be opened." << endl;
+          cout << "Error! The file not_existing.input cannot be opened." << endl;
           return EXIT_FAILURE;
       } else {
 
