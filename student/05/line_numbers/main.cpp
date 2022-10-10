@@ -14,13 +14,14 @@ int main()
   string outFile = "";
       cout << "Output file: ";        // output file name
       getline(cin, outFile);
-      ofstream fileWrite(outFile);    // creating file to be writen into
+
 
       if ( not fileRead ) {           // check for input file errors
           cout << "Error! The file not_existing.input cannot be opened." << endl;
           return EXIT_FAILURE;
-      } else {
 
+      } else {
+          ofstream fileWrite(outFile);    // creating file to be writen into
           string line;
           string temp;
           for(int i = 1 ;getline(fileRead, line); i++ ) {   // reading input file line by line
