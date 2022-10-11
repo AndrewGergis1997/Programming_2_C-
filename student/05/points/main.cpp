@@ -69,7 +69,7 @@ int main()
                  if(players.find(name)!=players.end()){
                      score += players[name];
                  }
-                 players.insert({name,score});
+                 players[name]=score;
              }
 
              std::vector<string> playerName;
