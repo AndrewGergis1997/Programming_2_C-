@@ -60,7 +60,7 @@ int main()
 {
   //gettig filename
 
-  cout << "Input file:";
+  cout << "Input file: ";
 
   string filename;
   getline(cin, filename);
@@ -71,8 +71,8 @@ int main()
 
   if (!file)
     {
-      cout << "Error! The file"<<filename
-           <<"cannot be opened."
+      cout << "Error! The file "<<filename
+           <<" cannot be opened."
            <<endl;
       return EXIT_FAILURE;
     }
