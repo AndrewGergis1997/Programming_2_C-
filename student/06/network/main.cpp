@@ -58,19 +58,15 @@ void store(std::string const &id1, std::string const &id2, NET &network)
   // trivial case of no followers
 
   std::vector<std::string> followers = network.at(id);
+  std::cout << dots << id <<std::endl;
 
   if(followers.empty())
-    {
-      std::cout << dots << id <<std::endl;
       return;
-    }
-
 
   for(std::string const &i : followers)
     {
       print(i, dots + "..", network);
     }
-  std::cout << dots << id <<std::endl;
 }
 
 int count(std::string const &id, NET const &network)
