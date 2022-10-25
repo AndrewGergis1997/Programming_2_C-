@@ -33,7 +33,8 @@ std::vector<std::string> split(const std::string& s,
     return result;
 }
 
- void store(std::string const &id1, std::string const &id2, NET &network)
+
+void store(std::string const &id1, std::string const &id2, NET &network)
  {
 
        // is person in network?
@@ -50,20 +51,26 @@ std::vector<std::string> split(const std::string& s,
 
        network.at(id1).push_back(id2);
  }
-void print(std::string const &id, std::string const dots, NET const &network)
+
+
+ void print(std::string const &id, std::string const dots, NET const &network)
 {
   // trivial case of no followers
+
   std::vector<std::string> followers = network.at(id);
 
-  std::cout << dots << id <<std::endl;
-
   if(followers.empty())
+    {
+      std::cout << dots << id <<std::endl;
       return;
+    }
+
 
   for(std::string const &i : followers)
     {
       print(i, dots + "..", network);
     }
+  std::cout << dots << id <<std::endl;
 }
 
 int count(std::string const &id, NET const &network)
@@ -137,7 +144,7 @@ int main()
             store (id1, id2, network);
 
 
-            print(id1, id2, network);
+
         }
         else if(command == "P" or command == "p")
         {
