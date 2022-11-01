@@ -117,14 +117,56 @@ bool is_valid_date(const std::string& date_str)
        (day <= month_sizes.at(stoi(month) - 1) or
         (month == "02" and is_leap_year and day <= "29")) )
     {
-      return true;
+      return false;
     }
   else
     {
-      return false;
+      return true;
     }
 }
 
+
+bool checkDate (ifstream &file2)
+{
+  set <string> dateData;
+  string line;
+  vector <string> dataItems;
+  while(getline(file2, line))
+    {
+      dataItems = split (line);
+      if (!is_valid_date(line))
+        {
+          return false;
+        }
+      dateData.insert(dataItems.at(1));
+    }
+  file2.close();
+  return true;
+}
+
+bool checkStages (ifstream &file4)
+{
+  set <string> StageData;
+  string line;
+  vector <string> dataItems;
+  while(getline(file4, line))
+    {
+      dataItems = split (line);
+      StageData.insert(dataItems.at(4));
+    }
+  for(uint i=0; i<dataItems.size();i++)
+    {
+      for (uint j=0; j<dataItems.size();j++)
+        {
+          if (dataItems.at(i)==dataItems.at(j))
+            {
+              return false;
+            }
+        }
+    }
+  file4.close();
+  return true;
+}
 
 //struct Gig{
 //  string artist,
@@ -222,23 +264,62 @@ void printDate (set <string>  &gig)
 //  return s;
 //}
 
-bool checkDate (ifstream &file2)
-{
-  set <string> dateData;
-  string line;
-  vector <string> dataItems;
-  while(getline(file2, line))
-    {
-      dataItems = split (line);
-      if (!is_valid_date(line))
-        {
-          return true;
-        }
-      dateData.insert(dataItems.at(1));
-    }
-  file2.close();
-  return false;
-}
+//struct Gig{
+//  string artist,
+//  date,
+//  city,
+//  stage;
+//};
+
+
+//void checkCommand(std::string & command, std::vector<Gig> gig_data,
+//                  std::set<std::string> artistsData)
+//{
+
+//    std::vector<std::string> commandParts;
+//    char delim = ' ';
+//    commandParts = split(command, delim);
+//    if(commandParts.size() < 1)
+//    {
+//        std::cout << "Error: Invalid input." << std::endl;
+//    }
+//    if(commandParts.size() == 1)
+//    {
+//        if(commandParts.at(0) != "ARTISTS" && commandParts.at(0) != "STAGES" )
+//        {
+//            std::cout << "Error: Invalid input." << std::endl;
+//        }
+//    }
+//    if (commandParts.size()== 1 && commandParts.at(0) == "ARTISTS")
+//    {
+//        print_artist(artistsData);
+//    }
+//    if (commandParts.size()== 1 && commandParts.at(0) == "STAGES")
+//    {
+//        std::cout << "All gig places in alphabetical order:" << std::endl;
+//        std::cout << gig2.city << " , " << gig2.stage << std::endl;
+//    }
+//    if(commandParts.size() == 2)
+//    {
+//        std::string secpos = commandParts.at(1);
+//        for(auto & a: gig_data)
+//            secpos = a;
+//        if(commandParts.at(0) == "ARTIST" && commandParts.at(1) != a)
+//        {
+//            std::cout << "Error: Not found." << std::endl;
+//        }
+//    }
+//    if(commandParts.size() == 2)
+//    {
+//        if(commandParts.at(0) == "STAGE" && commandParts.at(1) !=  gig2.stage)
+//        {
+//            std::cout << "Error: Not found." << std::endl;
+//        }
+//    }
+
+//    commandParts.clear();
+//}
+
 
 int main()
 {
@@ -273,17 +354,44 @@ int main()
       cout << "Error: Invalid format in file."<< endl;
       return EXIT_FAILURE;
     }
+
   // check for date data errors
   else if (not checkDate(file2))
     {
       cout << "Error: Invalid date."<< endl;
       return EXIT_FAILURE;
     }
+
+  // check for stage data errors
+  else if (not checkStages(file4))
+    {
+      cout << "Error: Already exists."<< endl;
+      return EXIT_FAILURE;
+    }
+
   //   reading data into a file structure
 
 
 
   //  set <string> artists = convertToSet(gigData.at(0));
+
+
+//  std::string command;
+//  while (command != "QUIT")
+//  {
+//      std::cout << "gigs> ";
+//      getline(std::cin, command);
+//      for (auto & c: command)
+//      {
+//          c = toupper(c);
+//      }
+//      checkCommand(command, gig_data, artistsData);
+
+
+//  }
+
+
+
 
   string command;
   while (command != "QUIT")
