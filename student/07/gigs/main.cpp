@@ -38,12 +38,12 @@ using namespace std;
 
 
 // Farthest year for which gigs can be allocated
-const std::string FARTHEST_POSSIBLE_YEAR = "2030";
+const string FARTHEST_POSSIBLE_YEAR = "2030";
 
 // Casual split func, if delim char is between "'s, ignores it.
-std::vector<std::string> split(const std::string& str, char delim = ';')
+ vector<string> split(const string& str, char delim = ';')
 {
-  std::vector<std::string> result = {""};
+  vector<string> result = {""};
   bool inside_quotation = false;
   for ( char current_char : str )
     {
@@ -67,23 +67,24 @@ std::vector<std::string> split(const std::string& str, char delim = ';')
   return result;
 }
 
-//bool isFormat(std::ifstream & file_obj)
-//{
-//  std::string line;
-//  while (getline(file_obj, line)) {
-//      int count = 0;
-//      for(uint i=0; i<line.size();i++)
-//        {
-//          if(line[i] == ';' && line[i+1]==';')
-//            return false;
-//          if(line[i] == ';')
-//            count++;
-//        }
-//      if(count!= 3)
-//        return false;
-//    }
-//  return true;
-//}
+bool isFormat(ifstream & file_obj)
+{
+  string line;
+  while (getline(file_obj, line)) {
+      int count = 0;
+      for(uint i=0; i<line.size();i++)
+        {
+          if(line[i] == ';' && line[i+1]==';')
+            return false;
+          if(line[i] == ';')
+            count++;
+        }
+      if(count!= 3)
+        return false;
+    }
+  file_obj.close();
+  return true;
+}
 // Checks if the given date_str is a valid date, i.e. if it has the format
 // dd-mm-yyyy and if it is also otherwise possible date.
 bool is_valid_date(const std::string& date_str)
@@ -132,56 +133,60 @@ bool is_valid_date(const std::string& date_str)
 //  stage;
 //};
 
-set <string> readArtistDataFromFile (ifstream &file)
+set <string> readArtistDataFromFile (ifstream &file1)
 {
   set <string> artistData;
   string line;
   vector <string> dataItems;
-  while(getline(file, line))
+  while(getline(file1, line))
     {
       dataItems = split (line);
       artistData.insert(dataItems.at(0));
     }
+  file1.close();
   return artistData;
 }
 
 
-set <string> readDateDataFromFile (ifstream &file)
+set <string> readDateDataFromFile (ifstream &file2)
 {
   set <string> dateData;
   string line;
   vector <string> dataItems;
-  while(getline(file, line))
+  while(getline(file2, line))
     {
       dataItems = split (line);
       dateData.insert(dataItems.at(1));
     }
+  file2.close();
   return dateData;
 }
 
-set <string> readCityDataFromFile (ifstream &file)
+set <string> readCityDataFromFile (ifstream &file3)
 {
   set <string> cityData;
   string line;
   vector <string> dataItems;
-  while(getline(file, line))
+  while(getline(file3, line))
     {
       dataItems = split (line);
       cityData.insert(dataItems.at(2));
     }
+  file3.close();
   return cityData;
 }
 
-set <string> readStageDataFromFile (ifstream &file)
+set <string> readStageDataFromFile (ifstream &file4)
 {
   set <string> stageData;
   string line;
   vector <string> dataItems;
-  while(getline(file, line))
+  while(getline(file4, line))
     {
       dataItems = split (line);
       stageData.insert(dataItems.at(3));
     }
+  file4.close();
   return stageData;
 }
 
@@ -193,6 +198,13 @@ void printArtist (set <string>  &gig)
     }
 }
 
+void printDate (set <string>  &gig)
+{
+  for (auto & itr : gig)
+    {
+      cout << itr << endl;
+    }
+}
 //set<int> convertToSet(vector<int> v)
 //{
 //  // Declaring the set
@@ -210,45 +222,90 @@ void printArtist (set <string>  &gig)
 //  return s;
 //}
 
+bool checkDate (ifstream &file2)
+{
+  set <string> dateData;
+  string line;
+  vector <string> dataItems;
+  while(getline(file2, line))
+    {
+      dataItems = split (line);
+      if (!is_valid_date(line))
+        {
+          return true;
+        }
+      dateData.insert(dataItems.at(1));
+    }
+  file2.close();
+  return false;
+}
 
 int main()
 {
   set <string> artistData;
+  set <string> artistDate;
+  set <string> artistCity;
+  set <string> artistStage;
   string inFile = "";
   cout << "Give a name for input file: ";         // input file name
   getline(cin, inFile);
 
-  ifstream fileRead(inFile);      // creating file to read from it
+  // creating files to read from it
+  ifstream fileRead(inFile);
+  ifstream file1(inFile);
+  artistData=readArtistDataFromFile (file1);
+  ifstream file2(inFile);
+  artistDate=readDateDataFromFile(file2);
+  ifstream file3(inFile);
+  artistCity=readCityDataFromFile(file3);
+  ifstream file4(inFile);
+  artistStage=readStageDataFromFile(file4);
 
-  if ( not fileRead ) {           // check for input file errors
+  // check for input file errors
+  if ( not fileRead ) {
       cout << "Error: File could not be read."<< endl;
       return EXIT_FAILURE;
     }
-  //  else if (not isFormat(fileRead))
-  //    {
-  //      return EXIT_FAILURE;
-  //    }
-  // reading data into a file structure
-  artistData=readArtistDataFromFile (fileRead);
-  // print first item
+
+  // check for format file errors
+  else if (not isFormat(fileRead))
+    {
+      cout << "Error: Invalid format in file."<< endl;
+      return EXIT_FAILURE;
+    }
+  // check for date data errors
+  else if (not checkDate(file2))
+    {
+      cout << "Error: Invalid date."<< endl;
+      return EXIT_FAILURE;
+    }
+  //   reading data into a file structure
+
+
 
   //  set <string> artists = convertToSet(gigData.at(0));
 
   string command;
-  while (command != "QUIT" || command != "quit")
+  while (command != "QUIT")
     {
-
-      cout<<"gigs>";
-      getline(cin,command);
-
+      cout << "gigs> ";
+      getline(std::cin, command);
+      for (auto & c: command)
+        {
+          c = toupper(c);
+        }
       if (command == "ARTISTS" || command == "artists")
         {
           cout<< "All artists in alphabetical order:"<<endl;
-
           printArtist(artistData);
-
+          printDate(artistDate);
         }
-
     }
+  fileRead.close();
+  file1.close();
+  file2.close();
+  file3.close();
+  file4.close();
+
   return EXIT_SUCCESS;
 }
