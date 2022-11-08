@@ -23,12 +23,17 @@
  * Student number: 150905291
  * UserID: mqange ( Necessary due to gitlab folder naming. )
  * E-Mail: andrew.gergis@tuni.fi
+ * my secnod group member Hizza Waseem hizza.waseem@tuni.fi
+ * already finished the course and took the exam
+ * so I was working with Noman and Talha
+ * our logic could be the same
  * */
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <map>
+#include <unordered_map>
 #include <vector>
 #include <algorithm>
 #include <set>
@@ -77,7 +82,7 @@ bool isFormat(ifstream & file_obj)
   string line;
   while (getline(file_obj, line)) {
       int count = 0;
-      for(uint i=0; i<line.size();i++)
+      for(uint8_t i=0; i<line.size();i++)
         {
           if(line[i] == ';' && line[i+1]==';')
             return false;
@@ -92,18 +97,18 @@ bool isFormat(ifstream & file_obj)
 }
 // Checks if the given date_str is a valid date, i.e. if it has the format
 // dd-mm-yyyy and if it is also otherwise possible date.
-bool is_valid_date(const std::string& date_str)
+bool is_valid_date(const string& date_str)
 {
-  std::vector<std::string> date_vec = split(date_str, '-');
+  vector<string> date_vec = split(date_str, '-');
   if ( date_vec.size() != 3 )
     {
       return false;
     }
 
-  std::string year = date_vec.at(0);
-  std::string month = date_vec.at(1);
-  std::string day = date_vec.at(2);
-  std::vector<std::string> month_sizes
+  string year = date_vec.at(0);
+  string month = date_vec.at(1);
+  string day = date_vec.at(2);
+  vector<string> month_sizes
       = { "31", "28", "31", "30", "31", "30",
           "31", "31", "30", "31", "30", "31" };
 
@@ -118,10 +123,11 @@ bool is_valid_date(const std::string& date_str)
   unsigned int year_int = stoi(year);
   bool is_leap_year = (year_int % 400 == 0) or
       (year_int % 100 != 0 and year_int % 4 == 0);
-  if ( day >= "01" and
-       (day <= month_sizes.at(stoi(month) - 1) or
+  if ( day <= "01" and
+       (day >= month_sizes.at(stoi(month) - 1) or
         (month == "02" and is_leap_year and day <= "29")) )
     {
+
       return false;
     }
   else
@@ -136,9 +142,8 @@ bool checkDate (vector <struct Gig> &artistData)
   set <string> dateData;
   string line;
   vector <string> dataItems;
-  for( uint i=0; i < artistData.size();i++)
+  for( uint8_t i=0; i < artistData.size();i++)
     {
-
       if (!is_valid_date(artistData.at(i).date))
         {
           return false;
@@ -147,27 +152,58 @@ bool checkDate (vector <struct Gig> &artistData)
   return true;
 }
 
+bool check_sched(vector<string> schedList,string sch )
+{
+  for(uint8_t i=0;i<schedList.size();i++)
+    {
+      if (schedList.at(i)==sch)
+        {
+          return true;
+        }
+    }
+  return false;
+}
+
 
 bool checkArtist (vector <struct Gig> &artistData)
 {
   map<string,vector<string>> artistSched;
-  for(uint i=0; i < artistData.size() ; i++){
-vector<string> schedList;
-if(artistSched.count(artistData.at(i).artistName)){
-//retreive the schedule list of the artist
-//schedList = artistSched.find(artistData.at(i).artistName);
-//Check if the date list doesn't contain the new date
-//if(check_sched(schedList,artistData.at(i).date))
-
-if (artistSched.find(artistData.at(i).artistName)==artistSched.end())
-return false;
-}
-schedList.push_back(artistData.at(i).date);
-artistSched.insert({artistData.at(i).artistName,schedList});
-  }
+  for(uint8_t i=0; i < artistData.size() ; i++){
+      vector<string> schedList;
+      if(artistSched.count(artistData.at(i).artistName)){
+          //retreive the schedule list of the artist
+          schedList = artistSched.at(artistData.at(i).artistName);
+          //Check if the date list doesn't contain the new date
+          if(check_sched(schedList,artistData.at(i).date))
+            return false;
+        }
+      schedList.push_back(artistData.at(i).date);
+      artistSched.clear();
+      artistSched.insert({artistData.at(i).artistName,schedList});
+    }
   return true;
 }
 
+
+
+bool checkStage (vector <struct Gig> &artistData)
+{
+  map<string,vector<string>> stageSched;
+  for(uint8_t i=0; i < artistData.size() ; i++){
+      vector<string> schedList;
+      if(stageSched.count(artistData.at(i).date)){
+          //retreive the schedule list of the artist
+          schedList = stageSched.at(artistData.at(i).date);
+          //Check if the date list doesn't contain the new date
+          if(check_sched(schedList,artistData.at(i).date))
+            return false;
+        }
+      schedList.push_back(artistData.at(i).stage);
+      stageSched.clear();
+      stageSched.insert({artistData.at(i).date,schedList});
+    }
+  return true;
+}
 
 void readDataFromFile (ifstream &file1,vector <struct Gig> &artistData )
 {
@@ -192,7 +228,7 @@ void readDataFromFile (ifstream &file1,vector <struct Gig> &artistData )
 void printArtist (vector <struct Gig>  &artistData)
 {
   set <string> gig;
-  for (uint i=0; i<artistData.size();i++)
+  for (uint8_t i=0; i<artistData.size();i++)
     {
       gig.insert(artistData.at(i).artistName);
     }
@@ -202,20 +238,144 @@ void printArtist (vector <struct Gig>  &artistData)
     }
 }
 
+void printArtistData (vector <struct Gig>  &artistData)
+{
+  map<string,vector<struct Gig>> artistSched;
+  for(uint8_t i=0; i < artistData.size() ; i++)
+    {
+      vector<string> schedList;
+      if(artistSched.count(artistData.at(i).artistName))
+        {
+          cout<<artistData.at(i).date << " "<<artistData.at(i).city << artistData.at(i).artistName <<endl;
+        }
+    }
+}
+
+void printDate (vector <struct Gig>  &artistData)
+{
+  set <string> gig;
+  for (uint8_t i=0; i<artistData.size();i++)
+    {
+      gig.insert(artistData.at(i).city+", "+artistData.at(i).stage);
+    }
+  for (auto & itr : gig)
+    {
+      cout << itr << endl;
+    }
+}
 
 
-//void printDate (vector <struct Gig>  &artistData)
+//void commandList(string & command, vector<struct Gig> artistData)
 //{
-//  set <string> gig;
-//  for (uint i=0; i<artistData.size();i++)
+//  if (command == "ARTISTS" || command == "artists")
 //    {
-//      gig.insert(artistData.at(i).date);
-//    }
-//  for (auto & itr : gig)
-//    {
-//      cout << itr << endl;
-//    }
-//}
+//      cout<< "All artists in alphabetical order:"<<endl;
+//      printArtist(artistData);
+//    }else if (command == "stages" || command == "STAGES")
+//        printDate(artistData);
+//  string artist = "ARTIST";
+
+
+void commandList(string & command,
+                 vector<Gig> artistData,
+                 set<Gig> finalData)
+{
+
+  vector<string> commandParts;
+  char delim = ' ';
+  commandParts = split(command, delim);
+  if(commandParts.size() < 1)
+    {
+      cout << "Error: Invalid input." << endl;
+    }
+  if(commandParts.size() == 1)
+    {
+      if (commandParts.at(0) == "ARTISTS")
+        {
+          print_artist(artistData);
+        }
+      if (commandParts.at(0) == "STAGES")
+        {
+          print_stages(artistData);
+        }
+      if (commandParts.at(0) == "QUIT")
+        {
+          exit(0);
+        }
+      if(commandParts.at(0) != "ARTISTS" &&
+         commandParts.at(0) != "STAGES" && commandParts.at(0) != "QUIT")
+        {
+          cout << "Error: Invalid input." << endl;
+        }
+    }
+  if(commandParts.size() == 2)
+    {
+      string artistname= artistpresent(commandParts, finalData);
+      if(commandParts.at(0) == "ARTIST"
+         && commandParts.at(1) == artistname )
+        {
+          printArtistgigs(artistname, finalData);
+        }
+      if(commandParts.at(0) == "ARTIST" && commandParts.at(1) != artistname)
+        cout << "Error: Not found." << endl;
+      string stageName= stagePresent(commandParts, finalData);
+      if(commandParts.at(0) == "STAGE"
+         && commandParts.at(1) == stageName )
+        {
+          printStagegigs(stageName, finalData);
+        }
+      if(commandParts.at(0) == "STAGE" && commandParts.at(1) != stageName)
+        cout << "Error: Not found." << endl;
+    }
+
+  if(commandParts.size()== 3)
+    {
+      if(commandParts.at(0) == "ARTSIST")
+        {
+          string secpos = commandParts.at(1);
+          string trdpos = commandParts.at(2);
+          secpos.erase(remove(secpos.begin(), secpos.end(), '"'), secpos.end());
+          trdpos.erase(remove(trdpos.begin(), trdpos.end(), '"'), trdpos.end());
+          string combinedst = secpos.append(trdpos);
+          string artistname;
+          for(auto & artist_i : artistData)
+            {
+              if(combinedst == artist_i.artist)
+                artistname = combinedst;
+            }
+
+          if(commandParts.at(0) == "ARTIST"
+             && commandParts.at(1) == artistname )
+            {
+              printArtistgigs(artistname, finalData);
+            }
+        }
+      if(commandParts.at(0) == "stage")
+        {
+          string secpos = commandParts.at(1);
+          string trdpos = commandParts.at(2);
+          secpos.erase(remove(secpos.begin(), secpos.end(), '"'), secpos.end());
+          trdpos.erase(remove(trdpos.begin(), trdpos.end(), '"'), trdpos.end());
+          string combinedst = secpos.append(trdpos);
+          string stageNeme;
+          for(auto & artist_i : artistData)
+            {
+              if(combinedst == artist_i.stage)
+                stageNeme = combinedst;
+            }
+
+          if(commandParts.at(0) == "ARTIST"
+             && commandParts.at(1) == stageNeme )
+            {
+              printArtistgigs(stageNeme, finalData);
+            }
+        }
+    }
+
+  commandParts.clear();
+}
+
+
 
 
 int main()
@@ -228,7 +388,7 @@ int main()
 
   // creating files to read from it
   ifstream fileRead(inFile);
-  ifstream file2(inFile);
+  ifstream file1(inFile);
   // check for input file errors
   if ( not fileRead ) {
       cout << "Error: File could not be read."<< endl;
@@ -236,7 +396,7 @@ int main()
     }
 
   // check for format file errors
-  if (not isFormat(file2))
+  if (not isFormat(file1))
     {
       cout << "Error: Invalid format in file."<< endl;
       return EXIT_FAILURE;
@@ -250,23 +410,20 @@ int main()
       return EXIT_FAILURE;
     }
 
-  // check for stage data errors
+  // check for artist performing two concerts at the same time
   if (not checkArtist(artistData))
     {
       cout << "Error: Already exists."<< endl;
       return EXIT_FAILURE;
     }
 
-//  if (not checkstage(artistData))
-//    {
-//      cout << "Error: Already exists."<< endl;
-//      return EXIT_FAILURE;
-//    }
-  //   reading data into a file structure
+  // check for stage used by two difrrent artists at the same time
+  if (not checkStage(artistData))
+    {
+      cout << "Error: Already exists."<< endl;
+      return EXIT_FAILURE;
+    }
 
-
-
-  //  set <string> artists = convertToSet(gigData.at(0));
 
 
 
@@ -274,18 +431,14 @@ int main()
   while (command != "QUIT")
     {
       cout << "gigs> ";
-      getline(std::cin, command);
+      getline(cin, command);
       for (auto & c: command)
         {
           c = toupper(c);
         }
-      if (command == "ARTISTS" || command == "artists")
-        {
-          cout<< "All artists in alphabetical order:"<<endl;
-          printArtist(artistData);
-        }
+
+      commandList(command,artistData);
     }
   fileRead.close();
-
   return EXIT_SUCCESS;
 }
