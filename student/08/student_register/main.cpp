@@ -101,9 +101,10 @@ bool change_phone_number(const std::string &student_number,
     }
   // Getting phone number
 
-  std::cout << "Enter a new phone number: " ;
+  std::cout << "Enter a new phone number: ";
   std::string new_number;
   getline(std::cin,new_number);
+  std::cout << std::endl;
 
   //check phone number
 
