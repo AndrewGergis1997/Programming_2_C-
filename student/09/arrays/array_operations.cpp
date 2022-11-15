@@ -48,7 +48,7 @@ void reverse(int *leftptr, int *rightptr)
       value = *leftptr;
       *leftptr = *rightptr;
       *rightptr = value;
-      rightptr++;
+      rightptr--;
       leftptr++;
     }
 }
