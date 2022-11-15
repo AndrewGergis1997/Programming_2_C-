@@ -108,37 +108,36 @@ int main() {
 
               // check parameter size
               if (pieces.size() - 1 != command.parameter_number)
-
                 {
                   cout << "Error: wrong number of parameters." << std::endl;
                   break;
                 }
               // check if command is exit command
-               if (command.is_exit)
-                 {
-                   cout << "Thanks and see you later!" << std::endl;
-                   return EXIT_SUCCESS;
-                 }
+              if (command.is_exit)
+                {
+                  cout << "Thanks and see you later!" << std::endl;
+                  return EXIT_SUCCESS;
+                }
               //transform parameters to double
               double p1,p2;
               if (!string_to_double(pieces.at(1),p1)
-                  || !string_to_double(pieces.at(23),p2))
+                  || !string_to_double(pieces.at(2),p2))
                 {
                   cout << "Error: a non-number operand." << std::endl;
                   break;
                 }
               //print results
-              cout << command.action(p1,p2) << std::endl;
+              cout << command.action(p1,p2) << endl;
               break;
             }
         }
 
-        // print out if command not found
-         if (command_not_found)
-           {
-             cout << "Error: unknown command." << std::endl;
+      // print out if command not found
+      if (command_not_found)
+        {
+          cout << "Error: unknown command." << std::endl;
 
-           }
+        }
 
     }
 }
