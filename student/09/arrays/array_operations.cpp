@@ -20,7 +20,7 @@ int greatest_v2(int *itemptr, int *endptr)
   int greatest = *itemptr;
   while (itemptr < endptr)
     {
-      if (greatest < *(itemptr+1))
+      if (greatest < *itemptr)
         {
           greatest = *itemptr;
         }
