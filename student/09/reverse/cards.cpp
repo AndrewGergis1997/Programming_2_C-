@@ -21,7 +21,28 @@ void Cards::print(std::ostream& s) {
       s << nr << ": " << to_be_printed->data << std::endl;
       to_be_printed = to_be_printed->next;
       ++nr;
-   }
+     }
+}
+
+bool Cards::remove(int &id)
+{
+  //check if deck is empty
+  if (top_.get() == nullptr)
+    return false;
+  id = top_->data;
+  top_ = top_->next;
+  return true;
+}
+
+void Cards::reverse()
+{
+    Cards reversed_deck;
+    while(top_.get() != nullptr)
+      {
+        reversed_deck.add(top_->data);
+        top_ = top_->next;
+      }
+    top_ = reversed_deck.top_;
 }
 
 // Tip for writing code more efficiently:
