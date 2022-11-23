@@ -114,6 +114,13 @@ void Book::open(Params params) const
   if (ch != nullptr)
     {
       ch->isOpen_=true;
+      for (Chapter *x : ch->subchapters_)
+        {
+          for (Chapter *y : x->subchapters_)
+            {
+              y->isOpen_=false;
+            }
+        }
     }
   else{
       std::cout << "Error: Not found: " << params[0] << std::endl;
@@ -214,7 +221,6 @@ void Book::printSubchapters(Params params) const
       std::vector<std::string> trivial = params;
       trivial = {" "};
     }
-
 }
 
 Chapter *Book::findChapter(const std::string &id) const
