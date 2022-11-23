@@ -22,6 +22,7 @@
 #include <unordered_map>
 
 
+
 // Named constants to improve readability in other modules
 const std::string EMPTY = "";
 const int NO_LENGTH = -1;
@@ -38,9 +39,9 @@ struct Chapter
     std::string id_ = EMPTY;
     std::string fullName_ = EMPTY;
     int length_ = 0;
-    bool isOpen_ = false;
+    bool isOpen_ = true;
     Chapter* parentChapter_ = nullptr;
-    std::vector<Chapter*> subchapters_;
+    std::vector<Chapter*> subchapters_ = { };
 };
 
 using IdSet = std::set<std::string>;
@@ -133,12 +134,14 @@ private:
     IdSet vectorToIdSet(const std::vector<Chapter*>& container) const;
 
     void printChapterRecursively(const Chapter *ptr,
-                                 const std::string indents = "",
+                                 const std::string &indents = "",
                                  int index = 1) const ;
 
     // add an existance checker to remove redunduncy
     // if (...find(...) != ......end())
     bool chapterExists (const std::string &id) const;
+
+
 };
 
 #endif // BOOK_HH

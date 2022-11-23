@@ -115,7 +115,7 @@ CommandInfo *Cli::findCommand(std::string cmd)
 
     for ( auto c = COMMANDS.begin(); c != COMMANDS.end(); c++ )
     {
-        for ( auto alias : c->aliases_ )
+        for ( auto &alias : c->aliases_ )
         {
             if ( alias == cmd )
             {
@@ -142,7 +142,7 @@ void Cli::printHelp(const std::vector<std::string>& params)
 void Cli::printCommandInfo(const CommandInfo& command, bool longer) const
 {
     std::cout << command.name_ << " --- " ;
-    for ( auto alias : command.aliases_ )
+    for ( auto &alias : command.aliases_ )
     {
         std::cout << alias << " ";
     }
@@ -155,7 +155,7 @@ void Cli::printCommandInfo(const CommandInfo& command, bool longer) const
         }
         else
         {
-            for ( auto param : command.params_ )
+            for ( auto &param : command.params_ )
             {
                 std::cout << param << " ";
             }
