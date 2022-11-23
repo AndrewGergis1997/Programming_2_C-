@@ -116,10 +116,7 @@ void Book::open(Params params) const
       ch->isOpen_=true;
       for (Chapter *x : ch->subchapters_)
         {
-          for (Chapter *y : x->subchapters_)
-            {
-              y->isOpen_=false;
-            }
+          x->isOpen_=false;
         }
     }
   else{
