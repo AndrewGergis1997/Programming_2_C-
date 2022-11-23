@@ -51,6 +51,18 @@ void Book::addRelation(const std::string &subchapter, const std::string &parentC
 void Book::printIds(Params params) const
 {
 
+    std::map<std:: string, std::string> fullChapter = {};
+    std::cout << "Book has " << chapters_.size() << " chapters:" << std::endl;
+
+    for (auto &chap : chapters_)
+    {
+        fullChapter.insert({chap.second->fullName_, chap.second->id_});
+    }
+
+    for (auto &ch : fullChapter)
+    {
+        std::cout << ch.first << " --- " << ch.second << std::endl;
+    }
 }
 
 void Book::printContents(Params params) const
