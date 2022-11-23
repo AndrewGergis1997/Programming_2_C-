@@ -137,7 +137,15 @@ void Book::printSiblingChapters(Params params) const
 void Book::printTotalLength(Params params) const
 {
 
+    Chapter *chptr = findChapter(params[0]);
+    int lenghth =0;
 
+    for(auto &ch : chapters_)
+    {
+        if (ch.second->id_ == chptr->id_ || ch.second->parentChapter_ == chptr)
+            lenghth += ch.second->length_;
+    }
+    std::cout << "Total length of " << chptr->fullName_ << " is " << lenghth << std::endl;
 }
 
 void Book::printLongestInHierarchy(Params params) const
