@@ -257,10 +257,33 @@ void Book::printLongestInHierarchy(Params params) const
 
 void Book::printShortestInHierarchy(Params params) const
 {
-  while(0)
+  Chapter *chap = findChapter(params[0]);
+  int length =chap->length_;
+  std::string name = chap->id_;
+  if (chap != nullptr)
     {
-      std::vector<std::string> trivial = params;
-      trivial = {" "};
+      std::vector<Chapter*> vec;
+      vec.push_back(chap);
+      while (vec.size() != 0)
+        {
+          if( length > vec.at(0)->length_)
+            {
+              length = vec.at(0)->length_ ;
+              name = vec.at(0)->id_;
+            }
+
+          vec.insert( vec.end(), vec.at(0)->subchapters_.begin(), vec.at(0)->subchapters_.end());
+          vec.erase(vec.begin());
+        }
+      if (name != params[0])
+        std::cout << "With the length of " << length << ", " << name <<
+                     " is the shortest chapter in " << params[0] << "'s hierarchy." <<std::endl;
+      else
+        std::cout << "With the length of " << length << ", " << name <<
+                     " is the shortest chapter in their hierarchy." <<std::endl;
+    }
+  else {
+      std::cout << "Error: Not found: " << params[0] << std::endl;
     }
 }
 
