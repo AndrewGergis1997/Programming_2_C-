@@ -258,10 +258,12 @@ void Book::printLongestInHierarchy(Params params) const
 void Book::printShortestInHierarchy(Params params) const
 {
   Chapter *chap = findChapter(params[0]);
-  int length =chap->length_;
-  std::string name = chap->id_;
+  int length;
+  std::string name;
   if (chap != nullptr)
     {
+       length =chap->length_;
+       name = chap->id_;
       std::vector<Chapter*> vec;
       vec.push_back(chap);
       while (vec.size() != 0)
