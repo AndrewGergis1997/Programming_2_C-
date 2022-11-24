@@ -11,6 +11,12 @@
 #        * All changes to private side are allowed.                         #
 #############################################################################
 */
+/*
+ * Name: Andrew Gergis
+ * Student number: 150905291
+ * UserID: mqange ( Necessary due to gitlab folder naming. )
+ * E-Mail: andrew.gergis@tuni.fi
+ */
 
 #ifndef BOOK_HH
 #define BOOK_HH

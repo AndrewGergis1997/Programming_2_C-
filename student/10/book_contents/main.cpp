@@ -14,7 +14,12 @@
 #        * Student's don't touch this file.                                 #
 #############################################################################
 */
-
+/*
+ * Name: Andrew Gergis
+ * Student number: 150905291
+ * UserID: mqange ( Necessary due to gitlab folder naming. )
+ * E-Mail: andrew.gergis@tuni.fi
+ */
 #include "book.hh"
 #include "cli.hh"
 #include "utils.hh"

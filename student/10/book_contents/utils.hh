@@ -11,7 +11,12 @@
 #        * This is also an example on a module that is not a class.         #
 #############################################################################
 */
-
+/*
+ * Name: Andrew Gergis
+ * Student number: 150905291
+ * UserID: mqange ( Necessary due to gitlab folder naming. )
+ * E-Mail: andrew.gergis@tuni.fi
+ */
 #ifndef UTILS_HH
 #define UTILS_HH
 

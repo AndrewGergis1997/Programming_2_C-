@@ -9,7 +9,12 @@
 # Check the utils.hh for more info.                                         #
 #############################################################################
 */
-
+/*
+ * Name: Andrew Gergis
+ * Student number: 150905291
+ * UserID: mqange ( Necessary due to gitlab folder naming. )
+ * E-Mail: andrew.gergis@tuni.fi
+ */
 #include "utils.hh"
 #include <vector>
 #include <fstream>

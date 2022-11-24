@@ -1,3 +1,10 @@
+/*
+ * Name: Andrew Gergis
+ * Student number: 150905291
+ * UserID: mqange ( Necessary due to gitlab folder naming. )
+ * E-Mail: andrew.gergis@tuni.fi
+ */
+
 #include "book.hh"
 Book::Book()
 {
@@ -116,6 +123,7 @@ void Book::open(Params params) const
       ch->isOpen_=true;
       for (Chapter *x : ch->subchapters_)
         {
+          if(x->subchapters_.size() !=0)
           x->isOpen_=false;
         }
     }
@@ -159,26 +167,55 @@ void Book::printSubchaptersN(Params params) const
 
 void Book::printSiblingChapters(Params params) const
 {
-  while(0)
+  std::map<std:: string, std::string> fullChapter = {};
+  std::set<std::string> sibChaps;
+  Chapter *ch = findChapter(params[0]);
+  int count = 0;
+  if (ch != nullptr)
     {
-      std::vector<std::string> trivial = params;
-      trivial = {" "};
+      if (ch->parentChapter_ != nullptr)
+        {
+          std::string parent = ch->parentChapter_->id_;
+          for (auto &chap : chapters_)
+            {
+              if (chap.second->parentChapter_ != nullptr &&
+                  chap.second->parentChapter_->id_ == parent &&
+                  chap.first != params[0])
+                {
+                  count++;
+                  sibChaps.insert(chap.first);
+                }
+            }
+            std::cout<< params[0] <<" has " << count << " sibling chapters:" << std::endl;
+        }
+      else
+      std::cout<< params[0] <<" has no sibling chapters."<< std::endl;
+      for(auto it = sibChaps.begin(); it!=sibChaps.end(); ++it){
+          std::cout << *it << std::endl;
+       }
+    }
+  else{
+      std::cout << "Error: Not found: " << params[0] << std::endl;
     }
 
 }
 
 void Book::printTotalLength(Params params) const
 {
-
   Chapter *chptr = findChapter(params[0]);
   int lenghth =0;
-
-  for(auto &ch : chapters_)
+  if (chptr != nullptr)
     {
-      if (ch.second->id_ == chptr->id_ || ch.second->parentChapter_ == chptr)
-        lenghth += ch.second->length_;
+      for(auto &ch : chapters_)
+        {
+          if (ch.second->id_ == chptr->id_ || ch.second->parentChapter_ == chptr)
+            lenghth += ch.second->length_;
+        }
+      std::cout << "Total length of " << chptr->fullName_ << " is " << lenghth << std::endl;
     }
-  std::cout << "Total length of " << chptr->fullName_ << " is " << lenghth << std::endl;
+  else {
+      std::cout << "Error: Not found: " << params[0] << std::endl;
+    }
 }
 
 void Book::printLongestInHierarchy(Params params) const
@@ -261,7 +298,6 @@ void Book::printChapterRecursively(const Chapter *ptr,
                                    int index) const
 {
   // head recursive
-
   // trivial case is when chapert does not have subchapter
   char sign = ptr->isOpen_? '-' : '+';
   std::cout  << sign << " " << indents << index << ". "<<
