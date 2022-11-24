@@ -147,10 +147,40 @@ void Book::openAll(Params params) const
 
 void Book::printParentsN(Params params) const
 {
-  while(0)
+  if (stoi(params[1]) < 1)
     {
-      std::vector<std::string> trivial = params;
-      trivial = {" "};
+      std::cout<<"Error. Level can't be less than 1."<<std::endl;
+      return;
+    }
+  Chapter *chap = findChapter(params[0]);
+  if (chap != nullptr)
+    {
+      if (chap->parentChapter_ == nullptr)
+        {
+          std::cout<< params[0] <<" has no parent chapters."<<std::endl;
+          return;
+        }
+      std::vector<Chapter*> vec;
+      int count = stoi(params[1]);
+      vec.push_back(chap->parentChapter_);
+      std::set<std::string> parents;
+      int gen=0;
+      while (vec.size() != 0 && count!=0)
+        {
+          parents.insert(vec.at(0)->id_);
+          count--;
+          if(vec.at(0)->parentChapter_ != nullptr)
+          vec.push_back(vec.at(0)->parentChapter_);
+          vec.erase(vec.begin());
+          gen++;
+        }
+      std::cout << params[0] << " has " << gen << " parent chapters:" << std::endl;
+      for(auto it = parents.begin(); it!=parents.end(); ++it){
+          std::cout << *it << std::endl;
+        }
+    }
+  else {
+      std::cout << "Error: Not found: " << params[0] << std::endl;
     }
 
 }
