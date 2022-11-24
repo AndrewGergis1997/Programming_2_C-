@@ -242,7 +242,7 @@ void Book::printLongestInHierarchy(Params params) const
           vec.erase(vec.begin());
         }
       std::cout << "With the length of " << length << ", " << name <<
-                   "is the longest chapter in " << params[0] << "'s hierarchy." <<std::endl;
+                   " is the longest chapter in " << params[0] << "'s hierarchy." <<std::endl;
     }
   else {
       std::cout << "Error: Not found: " << params[0] << std::endl;
