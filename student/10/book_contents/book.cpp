@@ -232,22 +232,27 @@ void Book::printLongestInHierarchy(Params params) const
       vec.push_back(chap);
       while (vec.size() != 0)
         {
-        if( length < vec.at(0)->length_)
-          {
-           length = vec.at(0)->length_ ;
-           name = vec.at(0)->id_;
-          }
+          if( length < vec.at(0)->length_)
+            {
+              length = vec.at(0)->length_ ;
+              name = vec.at(0)->id_;
+            }
 
           vec.insert( vec.end(), vec.at(0)->subchapters_.begin(), vec.at(0)->subchapters_.end());
           vec.erase(vec.begin());
         }
-      std::cout << "With the length of " << length << ", " << name <<
-                   " is the longest chapter in " << params[0] << "'s hierarchy." <<std::endl;
+      if (name != params[0])
+        std::cout << "With the length of " << length << ", " << name <<
+                     " is the longest chapter in " << params[0] << "'s hierarchy." <<std::endl;
+      else
+        std::cout << "With the length of " << length << ", " << name <<
+                     " is the longest chapter in their hierarchy." <<std::endl;
     }
   else {
       std::cout << "Error: Not found: " << params[0] << std::endl;
     }
 }
+
 
 
 void Book::printShortestInHierarchy(Params params) const
