@@ -124,7 +124,7 @@ void Book::open(Params params) const
       for (Chapter *x : ch->subchapters_)
         {
           if(x->subchapters_.size() !=0)
-          x->isOpen_=false;
+            x->isOpen_=false;
         }
     }
   else{
@@ -167,7 +167,6 @@ void Book::printSubchaptersN(Params params) const
 
 void Book::printSiblingChapters(Params params) const
 {
-  std::map<std:: string, std::string> fullChapter = {};
   std::set<std::string> sibChaps;
   Chapter *ch = findChapter(params[0]);
   int count = 0;
@@ -186,13 +185,13 @@ void Book::printSiblingChapters(Params params) const
                   sibChaps.insert(chap.first);
                 }
             }
-            std::cout<< params[0] <<" has " << count << " sibling chapters:" << std::endl;
+          std::cout<< params[0] <<" has " << count << " sibling chapters:" << std::endl;
         }
       else
-      std::cout<< params[0] <<" has no sibling chapters."<< std::endl;
+        std::cout<< params[0] <<" has no sibling chapters."<< std::endl;
       for(auto it = sibChaps.begin(); it!=sibChaps.end(); ++it){
           std::cout << *it << std::endl;
-       }
+        }
     }
   else{
       std::cout << "Error: Not found: " << params[0] << std::endl;
@@ -202,16 +201,19 @@ void Book::printSiblingChapters(Params params) const
 
 void Book::printTotalLength(Params params) const
 {
-  Chapter *chptr = findChapter(params[0]);
-  int lenghth =0;
-  if (chptr != nullptr)
+  Chapter *chap = findChapter(params[0]);
+  int length =0;
+  if (chap != nullptr)
     {
-      for(auto &ch : chapters_)
+      std::vector<Chapter*> vec;
+      vec.push_back(chap);
+      while (vec.size() != 0)
         {
-          if (ch.second->id_ == chptr->id_ || ch.second->parentChapter_ == chptr)
-            lenghth += ch.second->length_;
+          length += vec.at(0)->length_;
+          vec.insert( vec.end(), vec.at(0)->subchapters_.begin(), vec.at(0)->subchapters_.end());
+          vec.erase(vec.begin());
         }
-      std::cout << "Total length of " << chptr->fullName_ << " is " << lenghth << std::endl;
+      std::cout << "Total length of " << chap->id_ << " is " << length << "." << std::endl;
     }
   else {
       std::cout << "Error: Not found: " << params[0] << std::endl;
@@ -220,13 +222,33 @@ void Book::printTotalLength(Params params) const
 
 void Book::printLongestInHierarchy(Params params) const
 {
-  while(0)
-    {
-      std::vector<std::string> trivial = params;
-      trivial = {" "};
-    }
 
+  Chapter *chap = findChapter(params[0]);
+  int length =0;
+  std::string name = "";
+  if (chap != nullptr)
+    {
+      std::vector<Chapter*> vec;
+      vec.push_back(chap);
+      while (vec.size() != 0)
+        {
+        if( length < vec.at(0)->length_)
+          {
+           length = vec.at(0)->length_ ;
+           name = vec.at(0)->id_;
+          }
+
+          vec.insert( vec.end(), vec.at(0)->subchapters_.begin(), vec.at(0)->subchapters_.end());
+          vec.erase(vec.begin());
+        }
+      std::cout << "With the length of " << length << ", " << name <<
+                   "is the longest chapter in " << params[0] << "'s hierarchy." <<std::endl;
+    }
+  else {
+      std::cout << "Error: Not found: " << params[0] << std::endl;
+    }
 }
+
 
 void Book::printShortestInHierarchy(Params params) const
 {
@@ -235,7 +257,6 @@ void Book::printShortestInHierarchy(Params params) const
       std::vector<std::string> trivial = params;
       trivial = {" "};
     }
-
 }
 
 void Book::printParent(Params params) const
