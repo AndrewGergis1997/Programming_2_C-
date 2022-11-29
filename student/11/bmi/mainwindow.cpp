@@ -21,7 +21,8 @@ void MainWindow::on_countButton_clicked()
 
   double w = weight.toDouble();
   double h = height.toDouble();
-
+if ( h > 0)
+  {
   double bmi = w/(h*h*0.0001);
 
   ui->resultLabel->setText(QString::number(bmi));
@@ -36,6 +37,11 @@ void MainWindow::on_countButton_clicked()
   else{
       ui->infoTextBrowser->setText("Your weight is normal.");
     }
+  }
+else{
+    ui->resultLabel->setText("Cannot count");
+    ui->infoTextBrowser->setText("");
+  }
 
 }
 
