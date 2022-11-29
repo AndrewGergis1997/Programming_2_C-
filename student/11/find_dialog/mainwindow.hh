@@ -1,5 +1,5 @@
-#ifndef MAINWINDOW_HH
-#define MAINWINDOW_HH
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include <QMainWindow>
 
@@ -23,4 +23,4 @@ private:
 
 };
 
-#endif // MAINWINDOW_HH
+#endif // MAINWINDOW_H
